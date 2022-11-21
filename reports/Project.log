@@ -1,0 +1,51 @@
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/dist-packages/jupyter_cache/executors/utils.py", line 56, in single_nb_execution
+    record_timing=False,
+  File "/usr/local/lib/python3.7/dist-packages/nbclient/client.py", line 1204, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+  File "/usr/local/lib/python3.7/dist-packages/nbclient/util.py", line 84, in wrapped
+    return just_run(coro(*args, **kwargs))
+  File "/usr/local/lib/python3.7/dist-packages/nbclient/util.py", line 62, in just_run
+    return loop.run_until_complete(coro)
+  File "/usr/lib/python3.7/asyncio/base_events.py", line 587, in run_until_complete
+    return future.result()
+  File "/usr/local/lib/python3.7/dist-packages/nbclient/client.py", line 664, in async_execute
+    cell, index, execution_count=self.code_cells_executed + 1
+  File "/usr/local/lib/python3.7/dist-packages/nbclient/client.py", line 965, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "/usr/local/lib/python3.7/dist-packages/nbclient/client.py", line 862, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_score, classification_report, confusion_matrix
+from sklearn import metrics
+#Try running from k=1 through 30 and record testing accuracy
+k_range = range(1,31)
+scores = {}
+scores_list = []
+for k in k_range:
+        # install model
+        knn = KNeighborsClassifier(n_neighbors=k)
+        knn.fit(X_train,y_train)
+      
+        # filenameKNN = '/content/drive/MyDrive/datamining/tugas/model/knnmodel'+str(k)+'.pkl'
+        joblib.dump(knn,filenameKNN)
+        y_pred=knn.predict(X_test)
+        scores[k] = accuracy_score(y_test,y_pred)
+        scores_list.append(accuracy_score(y_test,y_pred))
+scores
+------------------
+
+[0;31m[0m
+[0;31mNameError[0mTraceback (most recent call last)
+[0;32m<ipython-input-39-28f699330001>[0m in [0;36m<module>[0;34m[0m
+[1;32m     12[0m [0;34m[0m[0m
+[1;32m     13[0m         [0;31m# filenameKNN = '/content/drive/MyDrive/datamining/tugas/model/knnmodel'+str(k)+'.pkl'[0m[0;34m[0m[0;34m[0m[0;34m[0m[0m
+[0;32m---> 14[0;31m         [0mjoblib[0m[0;34m.[0m[0mdump[0m[0;34m([0m[0mknn[0m[0;34m,[0m[0mfilenameKNN[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m     15[0m         [0my_pred[0m[0;34m=[0m[0mknn[0m[0;34m.[0m[0mpredict[0m[0;34m([0m[0mX_test[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m     16[0m         [0mscores[0m[0;34m[[0m[0mk[0m[0;34m][0m [0;34m=[0m [0maccuracy_score[0m[0;34m([0m[0my_test[0m[0;34m,[0m[0my_pred[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+
+[0;31mNameError[0m: name 'filenameKNN' is not defined
+NameError: name 'filenameKNN' is not defined
+
